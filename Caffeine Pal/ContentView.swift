@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+    
 struct ContentView: View {
     
     var body: some View {
@@ -32,3 +32,6 @@ struct ContentView: View {
         .environment(CaffeineStore())
         .environment(PurchaseOperations())
 }
+
+// next up: Make StoreKit File
+// next up: Make StoreKit code

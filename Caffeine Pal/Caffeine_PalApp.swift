@@ -18,6 +18,7 @@ struct Caffeine_PalApp: App {
             ContentView()
                 .task {
                     setupTips()
+                    await fetchProducts()
                 }
         }
         .environment(store)
@@ -33,5 +34,13 @@ extension Caffeine_PalApp {
             .displayFrequency(.immediate),
             .datastoreLocation(.applicationDefault)
         ])
+    }
+    
+    private func fetchProducts() async {
+        do {
+            try await purchases.configure()
+        } catch {
+            print(error)
+        }
     }
 }

@@ -334,7 +334,7 @@ struct TippingView: View {
                             .fontWeight(.medium)
                     }
                     Spacer()
-                    Button("$4.99") {
+                    Button(storefront.tips[tip]?.displayPrice ?? "") {
                         buy(tip)
                     }
                     .foregroundStyle(Color.inverseLabel)
