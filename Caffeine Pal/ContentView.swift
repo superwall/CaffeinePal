@@ -33,5 +33,4 @@ struct ContentView: View {
         .environment(PurchaseOperations())
 }
 
-// next up: Make StoreKit File
-// next up: Make StoreKit code
+// next up: Make recipe entries in StoreKit file

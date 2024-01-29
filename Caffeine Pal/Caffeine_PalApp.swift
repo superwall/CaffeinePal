@@ -30,6 +30,7 @@ struct Caffeine_PalApp: App {
 
 extension Caffeine_PalApp {
     private func setupTips() {
+        try? Tips.resetDatastore()
         try? Tips.configure([
             .displayFrequency(.immediate),
             .datastoreLocation(.applicationDefault)

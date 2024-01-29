@@ -24,15 +24,17 @@ struct RecipesView: View {
     }
     
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
-    private var tip = RecipeTip()
+    @State private var tip: RecipeTip? = nil
     @State private var modalSelection: ModalOption? = nil
     @State private var showError: Bool = false
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                TipView(tip, arrowEdge: .none)
-                    .padding(.horizontal)
+                if let purchaseTip = tip {
+                    TipView(purchaseTip, arrowEdge: .none)
+                        .padding(.horizontal)
+                }
                 Text("This Week's Specials")
                     .font(.title2)
                     .fontWeight(.semibold)
@@ -91,9 +93,18 @@ struct RecipesView: View {
                 Text("We hit a problem, please try again.")
             }
         }
+        .onAppear {
+            setTipPriceString()
+        }
     }
     
     // MARK: Private Functions
+    
+    private func setTipPriceString() {
+        if let firstRecipeProduct = storefront.recipes.values.first {
+            self.tip = .init(price: firstRecipeProduct.displayPrice)
+        }
+    }
     
     private func handleSelectionFor(_ recipe: EspressoDrink) {
         guard storefront.hasCaffeinePalPro || storefront.hasPurchased(recipe) else {
@@ -160,12 +171,18 @@ struct FeaturedEspressoDrinksView: View {
 }
 
 struct RecipeTip: Tip {
+    private var price: String
+    
+    init(price: String) {
+        self.price = price
+    }
+    
     var title: Text {
         Text("Our Signature Recipes")
     }
     
     var message: Text? {
-        Text("Make espresso drinks like never before. Each of our secret espresso recipes are available for purchase.")
+        Text("Make espresso drinks like never before. Each of our secret espresso recipes are available for purchase for \(price).")
     }
     
     var image: Image? {
