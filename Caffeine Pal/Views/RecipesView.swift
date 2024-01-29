@@ -64,6 +64,7 @@ struct RecipesView: View {
                             Button(storefront.hasPurchased(drink) ? "View" : "Buy") {
                                 handleSelectionFor(drink)
                             }
+                            .foregroundStyle(Color.inverseLabel)
                             .buttonBorderShape(.capsule)
                             .buttonStyle(.borderedProminent)
                             .padding(.leading, 8)
@@ -137,6 +138,7 @@ struct FeaturedEspressoDrinksView: View {
                                 Button(storefront.hasPurchased(drink) ? "View" : "Buy") {
                                     onTap(drink)
                                 }
+                                .foregroundStyle(Color.inverseLabel)
                                 .buttonBorderShape(.capsule)
                                 .buttonStyle(.borderedProminent)
                                 .padding(.trailing, 4)

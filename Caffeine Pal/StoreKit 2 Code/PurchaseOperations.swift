@@ -53,6 +53,12 @@ class PurchaseOperations {
     
     var hasCaffeinePalPro: Bool = false
     
+    // MARK: StoreKit Code
+    
+    func retrieveAllProducts() async throws {
+        // TODO: Implement
+    }
+    
     func hasPurchased(_ recipe: EspressoDrink) -> Bool {
         if hasCaffeinePalPro {
             return true

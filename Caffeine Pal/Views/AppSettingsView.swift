@@ -135,7 +135,7 @@ struct MembershipView: View {
                     .padding(2)
                     .background {
                         RoundedRectangle(cornerRadius: 12.0)
-                            .foregroundStyle(Color.white)
+                            .foregroundStyle(Color(uiColor: .systemBackground))
                     }
                 }
                 Button(action: {
@@ -337,6 +337,7 @@ struct TippingView: View {
                     Button("$4.99") {
                         buy(tip)
                     }
+                    .foregroundStyle(Color.inverseLabel)
                     .buttonBorderShape(.capsule)
                     .buttonStyle(.borderedProminent)
                 }

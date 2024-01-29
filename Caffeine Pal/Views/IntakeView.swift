@@ -130,6 +130,7 @@ struct QuickAddButton: View {
                     showPaywall.toggle()
                 }
             }
+            .foregroundStyle(Color.inverseLabel)
             .fontWeight(.bold)
             .buttonBorderShape(.capsule)
             .buttonStyle(.borderedProminent)
