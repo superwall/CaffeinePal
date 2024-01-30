@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct AppSettingsView: View {
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
@@ -25,6 +26,8 @@ struct AppSettingsView: View {
                     .padding()
                 TippingView()
                     .padding()
+                AppInformationView()
+                    .padding()
             }
             .navigationTitle("Settings")
         }
@@ -33,6 +36,7 @@ struct AppSettingsView: View {
 
 struct CaffeineProMemberView: View {
     @State private var bounceCrown: Bool = false
+    @State private var showManageSubs: Bool = false
     
     var body: some View {
         VStack {
@@ -59,7 +63,7 @@ struct CaffeineProMemberView: View {
                             bounceCrown = true
                         }
                 }
-                Text("Membership renews \("TODO")")
+                Text("We're happy to have you.")
                     .fontWeight(.medium)
                     .foregroundStyle(Color(uiColor: .secondaryLabel))
                     .frame(minWidth: 0,
@@ -67,10 +71,11 @@ struct CaffeineProMemberView: View {
                            alignment: .leading)
                     .padding(.bottom)
                 Button("Manage Subscription") {
-                    // TODO: Show manage subscription view
+                    showManageSubs.toggle()
                 }
                 .buttonBorderShape(.roundedRectangle(radius: 10))
                 .buttonStyle(.bordered)
+                .manageSubscriptionsSheet(isPresented: $showManageSubs)
             }
             .padding()
             .background {
@@ -83,6 +88,7 @@ struct CaffeineProMemberView: View {
 
 struct MembershipView: View {
     @State private var bounceCrown: Bool = false
+    @State private var showJoinPro: Bool = false
     
     var body: some View {
         VStack {
@@ -139,7 +145,7 @@ struct MembershipView: View {
                     }
                 }
                 Button(action: {
-                    
+                    showJoinPro.toggle()
                 }, label: {
                     Text("Join Pro")
                         .font(.title2.weight(.bold))
@@ -160,6 +166,9 @@ struct MembershipView: View {
                 RoundedRectangle(cornerRadius: 10.0)
                     .foregroundStyle(Color(uiColor: .systemGroupedBackground))
             }
+        }
+        .sheet(isPresented: $showJoinPro) {
+            PaywallView()
         }
     }
 }
@@ -233,6 +242,7 @@ struct AppIconsView: View {
                             .foregroundStyle(Color(uiColor: .systemGroupedBackground))
                     }
                 }
+                .id(storefront.hasCaffeinePalPro)
             }
         }
         .sheet(isPresented: $showPaywall) {
@@ -325,6 +335,8 @@ struct TippingView: View {
     
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
     @State private var showError: Bool = false
+    @State private var showSuccess: Bool = false
+    @State private var tipAmount: String = ""
     
     var body: some View {
         VStack {
@@ -366,6 +378,11 @@ struct TippingView: View {
         } message: {
             Text("We hit a problem, please try again.")
         }
+        .alert("Thank you!", isPresented: $showSuccess) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("We'll put your tip for \(tipAmount) to good use ❤️.")
+        }
     }
     
     // MARK: Private Functions
@@ -373,7 +390,10 @@ struct TippingView: View {
     private func buy(_ tip: AvailableTips) {
         Task {
             do {
-                try await storefront.purchase(tip)
+                if try await storefront.purchase(tip) {
+                    tipAmount = storefront.tips[tip]?.displayPrice ?? "0"
+                    showSuccess.toggle()
+                }
             } catch {
                 showError.toggle()
             }
@@ -381,6 +401,33 @@ struct TippingView: View {
     }
 }
 
+struct AppInformationView: View {
+    private let version: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
+    
+    var body: some View {
+        HStack(spacing: 16) {
+            Image("AppIcon-UI")
+                .resizable()
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .frame(width: 64, height: 64)
+            VStack(alignment: .leading, spacing: 4) {
+                Spacer()
+                Text("Caffeine Pal")
+                    .font(.subheadline.weight(.semibold))
+                Text("v\(version)")
+                    .fontWeight(.medium)
+                    .foregroundStyle(Color(uiColor: .secondaryLabel))
+                Text("Enjoy your coffee ☕️")
+                    .font(.caption2)
+                    .foregroundStyle(Color(uiColor: .secondaryLabel))
+                Spacer()
+            }
+            .font(.caption)
+            .foregroundColor(.primary)
+        }
+        .fixedSize()
+    }
+}
 #Preview {
     AppSettingsView()
         .environment(PurchaseOperations())

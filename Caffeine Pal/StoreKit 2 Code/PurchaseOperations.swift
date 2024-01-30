@@ -137,33 +137,34 @@ class PurchaseOperations {
         return purchasedRecipes.contains(recipe)
     }
     
-    func purchase(_ recipe: EspressoDrink) async throws {
+    func purchase(_ recipe: EspressoDrink) async throws -> Bool {
         guard let product = self.recipes[recipe] else {
             throw CaffeinePalStoreFrontError.productNotFound
         }
         
-        try await purchaseProduct(product)
+        return try await purchaseProduct(product)
     }
     
-    func purchase(_ tip: TippingView.AvailableTips) async throws {
+    func purchase(_ tip: TippingView.AvailableTips) async throws -> Bool {
         guard let product = self.tips[tip] else {
             throw CaffeinePalStoreFrontError.productNotFound
         }
         
-        try await purchaseProduct(product)
+        return try await purchaseProduct(product)
     }
     
-    func purchasePro() async throws {
+    func purchasePro() async throws -> Bool {
         guard let product = subs.first else {
             throw CaffeinePalStoreFrontError.productNotFound
         }
         
-        try await purchaseProduct(product)
+        return try await purchaseProduct(product)
     }
     
     func restorePurchases() async throws {
         do {
             try await AppStore.sync()
+            try await updateUserPurchases()
         } catch {
             throw error
         }
@@ -171,7 +172,7 @@ class PurchaseOperations {
     
     // MARK: Private Functions
     
-    private func purchaseProduct(_ product: Product) async throws {
+    private func purchaseProduct(_ product: Product) async throws -> Bool {
         do {
             let result = try await product.purchase()
             
@@ -180,6 +181,8 @@ class PurchaseOperations {
                 let verificationResult = try self.verifyPurchase(result)
                 try await updateUserPurchases()
                 await verificationResult.finish()
+                
+                return true
             case .userCancelled:
                 print("Cancelled")
             case .pending:
@@ -187,6 +190,8 @@ class PurchaseOperations {
             @unknown default:
                 fatalError()
             }
+            
+            return false
         } catch {
             throw error
         }

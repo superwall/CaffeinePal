@@ -27,6 +27,8 @@ struct RecipesView: View {
     @State private var tip: RecipeTip? = nil
     @State private var modalSelection: ModalOption? = nil
     @State private var showError: Bool = false
+    @State private var showSuccess: Bool = false
+    @State private var purchasedRecipe: EspressoDrink = .empty
     
     var body: some View {
         NavigationStack {
@@ -92,6 +94,11 @@ struct RecipesView: View {
             } message: {
                 Text("We hit a problem, please try again.")
             }
+            .alert("New Recipe Added", isPresented: $showSuccess) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Now you can make \(purchasedRecipe.name) anytime.")
+            }
         }
         .onAppear {
             setTipPriceString()
@@ -108,7 +115,7 @@ struct RecipesView: View {
     
     private func handleSelectionFor(_ recipe: EspressoDrink) {
         guard storefront.hasCaffeinePalPro || storefront.hasPurchased(recipe) else {
-            modalSelection = .paywall
+            buy(drink: recipe)
             return
         }
         
@@ -118,7 +125,10 @@ struct RecipesView: View {
     private func buy(drink: EspressoDrink) {
         Task {
             do {
-                try await storefront.purchase(drink)
+                if try await storefront.purchase(drink) {
+                    purchasedRecipe = drink
+                    showSuccess.toggle()
+                }
             } catch {
                 showError.toggle()
             }

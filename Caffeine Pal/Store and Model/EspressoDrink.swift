@@ -48,6 +48,12 @@ struct EspressoDrink: Identifiable, Hashable {
 // MARK: Recipes
 
 extension EspressoDrink {
+    static var empty: EspressoDrink {
+        get {
+            return .init(id: "", name: "", description: "")
+        }
+    }
+    
     static func recipes() -> [EspressoDrink:String] {
         return [.espresso: """
 # Caffeine Pal's Signature Espresso Recipe

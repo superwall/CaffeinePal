@@ -31,6 +31,7 @@ struct PaywallView: View {
                                 .combined(with: .opacity))
                 }
             }
+            .scrollIndicators(.hidden)
             .padding(.horizontal, 44)
             .padding(.vertical)
             .alert("Uh Oh!", isPresented: $showError) {
@@ -46,7 +47,11 @@ struct PaywallView: View {
     private func joinPro() {
         Task {
             do {
-                try await storefront.purchasePro()
+                if try await storefront.purchasePro() {
+                    withAnimation {
+                        showWelcome.toggle()
+                    }
+                }
             } catch {
                 showError.toggle()
             }
@@ -57,6 +62,12 @@ struct PaywallView: View {
         Task {
             do {
                 try await storefront.restorePurchases()
+                
+                if storefront.hasCaffeinePalPro {
+                    withAnimation {
+                        showWelcome.toggle()
+                    }
+                }
             } catch {
                 showError.toggle()
             }
