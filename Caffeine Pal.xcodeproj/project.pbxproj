@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33344BE72B6849E900FCEF58 /* CaffinePalProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 33344BE62B6849E900FCEF58 /* CaffinePalProducts.storekit */; };
 		33440CA32B604A4200D0FF9C /* Caffeine_PalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CA22B604A4200D0FF9C /* Caffeine_PalApp.swift */; };
 		33440CA52B604A4200D0FF9C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CA42B604A4200D0FF9C /* ContentView.swift */; };
 		33440CA72B604A4600D0FF9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33440CA62B604A4600D0FF9C /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		33344BE62B6849E900FCEF58 /* CaffinePalProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = CaffinePalProducts.storekit; sourceTree = "<group>"; };
 		33440C9F2B604A4200D0FF9C /* Caffeine Pal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Caffeine Pal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33440CA22B604A4200D0FF9C /* Caffeine_PalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caffeine_PalApp.swift; sourceTree = "<group>"; };
 		33440CA42B604A4200D0FF9C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 		33440C962B604A4200D0FF9C = {
 			isa = PBXGroup;
 			children = (
+				33344BE62B6849E900FCEF58 /* CaffinePalProducts.storekit */,
 				33440CB12B604B3E00D0FF9C /* Configuration */,
 				33440CA12B604A4200D0FF9C /* Caffeine Pal */,
 				33440CA02B604A4200D0FF9C /* Products */,
@@ -187,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33440CAA2B604A4600D0FF9C /* Preview Assets.xcassets in Resources */,
+				33344BE72B6849E900FCEF58 /* CaffinePalProducts.storekit in Resources */,
 				33440CA72B604A4600D0FF9C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
