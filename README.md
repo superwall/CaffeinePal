@@ -2,7 +2,7 @@
 
 In this post, we'll teach you all about using StoreKit 2 in your iOS app. We'll be doing all of this in our fictional caffeine tracking app, Caffeine Pal!
 
-![Caffine Pal on iOS](caffeinePal.png?raw=true "Caffeine Pal")
+![Caffine Pal on iOS](cp.jpg?raw=true "Caffeine Pal")
 
 ### StoreKit 2 Concepts
 We'll cover all of the fundamental concepts of StoreKit 2 in your app. Primarily, we'll show end-to-end how to implement...
