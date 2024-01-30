@@ -63,14 +63,22 @@ class PurchaseOperations {
     private(set) var hasCaffeinePalPro: Bool = false
     
     // Purchased Products
-    private(set) var purchasedRecipes: [Product] = []
-    private(set) var purchasedSubs: [Product] = []
+    private(set) var purchasedRecipes: [EspressoDrink] = []
+    
+    // Listen for transactions
+    var updateListenerTask: Task<Void, Error>? = nil
+    
+    deinit {
+        updateListenerTask?.cancel()
+    }
     
     // MARK: Configure
 
     func configure() async throws {
         do {
+            updateListenerTask = listenForTransactions()
             try await retrieveAllProducts()
+            try await updateUserPurchases()
         } catch {
             throw error
         }
@@ -82,9 +90,10 @@ class PurchaseOperations {
     
     func retrieveAllProducts() async throws {
         do {
-            var tipIdentifiers: [String] = PurchaseOperations.tipProductIdentifiers
+            let tipIdentifiers: [String] = PurchaseOperations.tipProductIdentifiers
             let recipeIdentifiers: [String] = PurchaseOperations.recipeProductIdentifiers
-            let allIdentifiers: [String] = tipIdentifiers + recipeIdentifiers
+            let subIdentifiers: [String] = ["subscription.caffeinePalPro.annual"]
+            let allIdentifiers: [String] = tipIdentifiers + recipeIdentifiers + subIdentifiers
             
             let products = try await Product.products(for: allIdentifiers)
             let allTips = TippingView.AvailableTips.allCases
@@ -109,16 +118,11 @@ class PurchaseOperations {
                         print("Unknown product id: \(product.id)")
                     }
                 case .autoRenewable:
-                    print("Auto renewable")
-                case .nonRenewable:
-                    print("Non renewable")
+                    self.subs.append(product)
                 default:
-                    //Ignore this product.
-                    print("Unknown product")
+                    print("Unknown product with identifier \(product.id)")
                 }
             }
-            
-            print("Done!")
         } catch {
             print(error)
             throw error
@@ -130,15 +134,15 @@ class PurchaseOperations {
             return true
         }
         
-        // TODO: Implement
-        return false
+        return purchasedRecipes.contains(recipe)
     }
     
     func purchase(_ recipe: EspressoDrink) async throws {
-        // TODO: Implement
+        guard let product = self.recipes[recipe] else {
+            throw CaffeinePalStoreFrontError.productNotFound
+        }
         
-        
-        // product.purchase() and switch over the result
+        try await purchaseProduct(product)
     }
     
     func purchase(_ tip: TippingView.AvailableTips) async throws {
@@ -146,13 +150,35 @@ class PurchaseOperations {
             throw CaffeinePalStoreFrontError.productNotFound
         }
         
+        try await purchaseProduct(product)
+    }
+    
+    func purchasePro() async throws {
+        guard let product = subs.first else {
+            throw CaffeinePalStoreFrontError.productNotFound
+        }
+        
+        try await purchaseProduct(product)
+    }
+    
+    func restorePurchases() async throws {
+        do {
+            try await AppStore.sync()
+        } catch {
+            throw error
+        }
+    }
+    
+    // MARK: Private Functions
+    
+    private func purchaseProduct(_ product: Product) async throws {
         do {
             let result = try await product.purchase()
             
             switch result {
             case .success(let result):
                 let verificationResult = try self.verifyPurchase(result)
-                await updateUserPurchases()
+                try await updateUserPurchases()
                 await verificationResult.finish()
             case .userCancelled:
                 print("Cancelled")
@@ -166,16 +192,6 @@ class PurchaseOperations {
         }
     }
     
-    func purchasePro() async throws {
-        // TODO: Implement
-    }
-    
-    func restorePurchases() async throws {
-        // TODO: Implement
-    }
-    
-    // MARK: Private Functions
-    
     private func verifyPurchase<T>(_ result: VerificationResult<T>) throws -> T {
         switch result {
         case .unverified:
@@ -185,8 +201,7 @@ class PurchaseOperations {
         }
     }
     
-    private func updateUserPurchases() async {
-        var recipes: [EspressoDrink] = []        
+    private func updateUserPurchases() async throws {
         let allRecipes = EspressoDrink.all()
         
         for await entitlement in Transaction.currentEntitlements {
@@ -196,7 +211,7 @@ class PurchaseOperations {
                 switch verifiedPurchase.productType {
                 case .nonConsumable:
                     if let recipe = allRecipes.first(where: { $0.skIdentifier == verifiedPurchase.productID }) {
-                        recipes.append(recipe)
+                        purchasedRecipes.append(recipe)
                     } else {
                         print("Verified purchase couldn't be matched to local model.")
                     }
@@ -207,9 +222,25 @@ class PurchaseOperations {
                 }
             } catch {
                 print("Failing silently: Possible unverified purchase.")
+                throw error
             }
         }
     }
+    
+    private func listenForTransactions() -> Task<Void, Error> {
+        return Task.detached {
+            for await result in Transaction.updates {
+                do {
+                    let transaction = try self.verifyPurchase(result)
+                    try await self.updateUserPurchases()
+                    await transaction.finish()
+                } catch {
+                    print("Transaction didn't pass verification - ignoring purchase.")
+                }
+            }
+        }
+    }
+
 }
 
 // MARK: Product Identifiers

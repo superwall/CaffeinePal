@@ -343,7 +343,40 @@
     ]
   },
   "subscriptionGroups" : [
+    {
+      "id" : "19AA9E89",
+      "localizations" : [
 
+      ],
+      "name" : "Caffeine Pal Subscriptions",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "19.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "30BE56A6",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "subscription.caffeinePalPro.annual",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Caffeine Pal Pro: Annual",
+          "subscriptionGroupID" : "19AA9E89",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
   ],
   "version" : {
     "major" : 3,
