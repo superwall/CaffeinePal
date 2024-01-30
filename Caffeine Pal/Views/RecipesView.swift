@@ -24,15 +24,19 @@ struct RecipesView: View {
     }
     
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
-    private var tip = RecipeTip()
+    @State private var tip: RecipeTip? = nil
     @State private var modalSelection: ModalOption? = nil
     @State private var showError: Bool = false
+    @State private var showSuccess: Bool = false
+    @State private var purchasedRecipe: EspressoDrink = .empty
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                TipView(tip, arrowEdge: .none)
-                    .padding(.horizontal)
+                if let purchaseTip = tip {
+                    TipView(purchaseTip, arrowEdge: .none)
+                        .padding(.horizontal)
+                }
                 Text("This Week's Specials")
                     .font(.title2)
                     .fontWeight(.semibold)
@@ -90,14 +94,28 @@ struct RecipesView: View {
             } message: {
                 Text("We hit a problem, please try again.")
             }
+            .alert("New Recipe Added", isPresented: $showSuccess) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Now you can make \(purchasedRecipe.name) anytime.")
+            }
+        }
+        .onAppear {
+            setTipPriceString()
         }
     }
     
     // MARK: Private Functions
     
+    private func setTipPriceString() {
+        if let firstRecipeProduct = storefront.recipes.values.first {
+            self.tip = .init(price: firstRecipeProduct.displayPrice)
+        }
+    }
+    
     private func handleSelectionFor(_ recipe: EspressoDrink) {
         guard storefront.hasCaffeinePalPro || storefront.hasPurchased(recipe) else {
-            modalSelection = .paywall
+            buy(drink: recipe)
             return
         }
         
@@ -107,7 +125,10 @@ struct RecipesView: View {
     private func buy(drink: EspressoDrink) {
         Task {
             do {
-                try await storefront.purchase(drink)
+                if try await storefront.purchase(drink) {
+                    purchasedRecipe = drink
+                    showSuccess.toggle()
+                }
             } catch {
                 showError.toggle()
             }
@@ -160,12 +181,18 @@ struct FeaturedEspressoDrinksView: View {
 }
 
 struct RecipeTip: Tip {
+    private var price: String
+    
+    init(price: String) {
+        self.price = price
+    }
+    
     var title: Text {
         Text("Our Signature Recipes")
     }
     
     var message: Text? {
-        Text("Make espresso drinks like never before. Each of our secret espresso recipes are available for purchase.")
+        Text("Make espresso drinks like never before. Each of our secret espresso recipes are available for purchase for \(price).")
     }
     
     var image: Image? {
