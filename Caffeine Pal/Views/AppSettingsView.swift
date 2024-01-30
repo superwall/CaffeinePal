@@ -308,6 +308,19 @@ struct TippingView: View {
                 "🫣"
             }
         }
+        
+        var shortDescription: String {
+            switch self {
+            case .small:
+                "small"
+            case .medium:
+                "medium"
+            case .large:
+                "large"
+            case .justCrazy:
+                "irresponsible"
+            }
+        }
     }
     
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations

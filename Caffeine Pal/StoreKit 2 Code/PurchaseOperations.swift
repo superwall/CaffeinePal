@@ -82,7 +82,11 @@ class PurchaseOperations {
     
     func retrieveAllProducts() async throws {
         do {
-            let products = try await Product.products(for: PurchaseOperations.tipProductIdentifiers)
+            var tipIdentifiers: [String] = PurchaseOperations.tipProductIdentifiers
+            let recipeIdentifiers: [String] = PurchaseOperations.recipeProductIdentifiers
+            let allIdentifiers: [String] = tipIdentifiers + recipeIdentifiers
+            
+            let products = try await Product.products(for: allIdentifiers)
             let allTips = TippingView.AvailableTips.allCases
             let allRecipes = EspressoDrink.all()
             
@@ -213,19 +217,13 @@ class PurchaseOperations {
 extension PurchaseOperations {
     static var tipProductIdentifiers: [String] {
         get {
-            ["small",
-             "medium",
-             "large",
-             "irresponsible"].map { return "consumable.tip." + $0 }
+            return TippingView.AvailableTips.allCases.map { $0.skIdentifier }
         }
     }
     
     static var recipeProductIdentifiers: [String] {
         get {
-            ["small",
-             "medium",
-             "large",
-             "irresponsible"].map { return "nonconsumable.recipe." + $0 }
+            return EspressoDrink.all().map { $0.skIdentifier }
         }
     }
 }
@@ -234,23 +232,12 @@ extension PurchaseOperations {
 
 extension TippingView.AvailableTips {
     var skIdentifier: String {
-        let allIdentifiers = PurchaseOperations.tipProductIdentifiers
-        
-        switch self {
-        case .small:
-            return allIdentifiers.first(where: { $0.contains("small") }) ?? ""
-        case .medium:
-            return allIdentifiers.first(where: { $0.contains("medium") }) ?? ""
-        case .large:
-            return allIdentifiers.first(where: { $0.contains("large") }) ?? ""
-        case .justCrazy:
-            return allIdentifiers.first(where: { $0.contains("irresponsible") }) ?? ""
-        }
+        return "consumable.tip." + self.shortDescription
     }
 }
 
 extension EspressoDrink {
     var skIdentifier: String {
-        return "nonconsumable.recipe." + productSku
+        return "nonconsumable.recipe." + id
     }
 }

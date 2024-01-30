@@ -1,4 +1,4 @@
-//
+ //
 //  EspressoDrink.swift
 //  Caffeine Pal
 //
@@ -11,23 +11,22 @@ struct EspressoDrink: Identifiable, Hashable {
     let id: String
     let name: String
     let description: String
-    let productSku: String
     
-    static let espresso = EspressoDrink(id: "espresso", name: "Espresso", description: "A concentrated form of coffee made by forcing pressurized hot water through finely ground coffee beans.", productSku: "SKU001")
-    static let americano = EspressoDrink(id: "americano", name: "Americano", description: "Espresso diluted with hot water, giving it a similar strength to drip coffee but with a different flavor.", productSku: "SKU002")
-    static let cappuccino = EspressoDrink(id: "cappuccino", name: "Cappuccino", description: "A coffee drink consisting of equal parts espresso, steamed milk, and milk froth.", productSku: "SKU003")
-    static let latte = EspressoDrink(id: "latte", name: "Latte", description: "Made with one-third espresso and two-thirds steamed milk, topped with a small amount of milk froth.", productSku: "SKU004")
-    static let flatWhite = EspressoDrink(id: "flatWhite", name: "Flat White", description: "Similar to a latte, but with a higher proportion of coffee to milk, and usually made with microfoam.", productSku: "SKU005")
-    static let macchiato = EspressoDrink(id: "macchiato", name: "Macchiato", description: "Espresso with a small amount of frothed milk on top.", productSku: "SKU006")
-    static let cortado = EspressoDrink(id: "cortado", name: "Cortado", description: "Equal parts espresso and warm milk to reduce the acidity.", productSku: "SKU007")
-    static let mocha = EspressoDrink(id: "mocha", name: "Mocha", description: "A combination of espresso, steamed milk, and chocolate, typically topped with whipped cream.", productSku: "SKU008")
-    static let ristretto = EspressoDrink(id: "ristretto", name: "Ristretto", description: "A very concentrated espresso shot, made with less water for a bolder flavor.", productSku: "SKU009")
-    static let lungo = EspressoDrink(id: "lungo", name: "Lungo", description: "An espresso shot made with more water, resulting in a weaker taste compared to a regular espresso.", productSku: "SKU010")
-    static let doppio = EspressoDrink(id: "doppio", name: "Doppio", description: "A double shot of espresso, twice the amount of a single shot.", productSku: "SKU011")
-    static let affogato = EspressoDrink(id: "affogato", name: "Affogato", description: "Typically a dessert coffee, it's a scoop of vanilla ice cream topped with a shot of hot espresso.", productSku: "SKU012")
-    static let espressoConPanna = EspressoDrink(id: "espressoConPanna", name: "Espresso Con Panna", description: "Espresso topped with whipped cream.", productSku: "SKU013")
-    static let espressoRomano = EspressoDrink(id: "espressoRomano", name: "Espresso Romano", description: "Espresso served with a slice of lemon or lemon zest.", productSku: "SKU014")
-    static let redEye = EspressoDrink(id: "redEye", name: "Red Eye", description: "A cup of regular drip coffee with a shot of espresso added.", productSku: "SKU015")
+    static let espresso = EspressoDrink(id: "espresso", name: "Espresso", description: "A concentrated form of coffee made by forcing pressurized hot water through finely ground coffee beans.")
+    static let americano = EspressoDrink(id: "americano", name: "Americano", description: "Espresso diluted with hot water, giving it a similar strength to drip coffee but with a different flavor.")
+    static let cappuccino = EspressoDrink(id: "cappuccino", name: "Cappuccino", description: "A coffee drink consisting of equal parts espresso, steamed milk, and milk froth.")
+    static let latte = EspressoDrink(id: "latte", name: "Latte", description: "Made with one-third espresso and two-thirds steamed milk, topped with a small amount of milk froth.")
+    static let flatWhite = EspressoDrink(id: "flatWhite", name: "Flat White", description: "Similar to a latte, but with a higher proportion of coffee to milk, and usually made with microfoam.")
+    static let macchiato = EspressoDrink(id: "macchiato", name: "Macchiato", description: "Espresso with a small amount of frothed milk on top.")
+    static let cortado = EspressoDrink(id: "cortado", name: "Cortado", description: "Equal parts espresso and warm milk to reduce the acidity.")
+    static let mocha = EspressoDrink(id: "mocha", name: "Mocha", description: "A combination of espresso, steamed milk, and chocolate, typically topped with whipped cream.")
+    static let ristretto = EspressoDrink(id: "ristretto", name: "Ristretto", description: "A very concentrated espresso shot, made with less water for a bolder flavor.")
+    static let lungo = EspressoDrink(id: "lungo", name: "Lungo", description: "An espresso shot made with more water, resulting in a weaker taste compared to a regular espresso.")
+    static let doppio = EspressoDrink(id: "doppio", name: "Doppio", description: "A double shot of espresso, twice the amount of a single shot.")
+    static let affogato = EspressoDrink(id: "affogato", name: "Affogato", description: "Typically a dessert coffee, it's a scoop of vanilla ice cream topped with a shot of hot espresso.")
+    static let espressoConPanna = EspressoDrink(id: "espressoConPanna", name: "Espresso Con Panna", description: "Espresso topped with whipped cream.")
+    static let espressoRomano = EspressoDrink(id: "espressoRomano", name: "Espresso Romano", description: "Espresso served with a slice of lemon or lemon zest.")
+    static let redEye = EspressoDrink(id: "redEye", name: "Red Eye", description: "A cup of regular drip coffee with a shot of espresso added.")
     
     static func all() -> [EspressoDrink] {
         return [

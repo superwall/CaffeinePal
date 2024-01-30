@@ -32,5 +32,3 @@ struct ContentView: View {
         .environment(CaffeineStore())
         .environment(PurchaseOperations())
 }
-
-// next up: Make recipe entries in StoreKit file
