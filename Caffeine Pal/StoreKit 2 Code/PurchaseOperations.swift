@@ -11,51 +11,6 @@ import StoreKit
 
 @Observable
 class PurchaseOperations {
-    enum CaffeinePalStoreFrontError: Error {
-        case productNotFound, failedVerification
-    }
-    
-    enum ProFeatures: String, Identifiable, CaseIterable, CustomStringConvertible {
-        case appIcons = "Custom App Icons"
-        case logging = "Caffeine Logging"
-        case recipes = "Espresso Recipes"
-        
-        var id: Self { return self }
-        
-        var description: String {
-            switch self {
-            case .appIcons:
-                "Customize your Home Screen."
-            case .logging:
-                "Easily log your espresso shots."
-            case .recipes:
-                "Access exclusive espresso recipes."
-            }
-        }
-        
-        var expandedDetails: String {
-            switch self {
-            case .appIcons:
-                "Make Caffeine Pal stnad out in your most personable space - your Home Screen. Choose from three unqiue icons."
-            case .logging:
-                "Our super simple caffeine logging lets you quickly log espresso shots in a matter of seconds."
-            case .recipes:
-                "Unlock access to the world's most exlusive espresso based coffee drinks recipes. Create our signature drinks right at home!"
-            }
-        }
-        
-        var symbol: String {
-            switch self {
-            case .appIcons:
-                "square.fill"
-            case .logging:
-                "checklist.checked"
-            case .recipes:
-                "book.pages.fill"
-            }
-        }
-    }
-    
     // Available Products
     private(set) var tips: [TippingView.AvailableTips : Product] = [:]
     private(set) var recipes: [EspressoDrink : Product] = [:]
@@ -64,26 +19,25 @@ class PurchaseOperations {
     
     // Purchased Products
     private(set) var purchasedRecipes: [EspressoDrink] = []
+    private(set) var purchasedSubs: [Product] = []
     
     // Listen for transactions
-    var updateListenerTask: Task<Void, Error>? = nil
+    var transactionListener: Task<Void, Error>? = nil
     
     deinit {
-        updateListenerTask?.cancel()
+        transactionListener?.cancel()
     }
     
     // MARK: Configure
 
     func configure() async throws {
         do {
-            updateListenerTask = listenForTransactions()
+            transactionListener = createTransactionTask()
             try await retrieveAllProducts()
             try await updateUserPurchases()
         } catch {
             throw error
         }
-        
-        //TODO: Listen for transactions
     }
     
     // MARK: StoreKit Code
@@ -222,6 +176,12 @@ class PurchaseOperations {
                     }
                 case .autoRenewable:
                     self.hasCaffeinePalPro = true
+                    
+                    if let subscription = subs.first(where: { $0.id == verifiedPurchase.productID }) {
+                        purchasedSubs.append(subscription)
+                    } else {
+                        print("Verified subscription couldn't be matched to fetched subscription.")
+                    }
                 default:
                     break
                 }
@@ -232,11 +192,11 @@ class PurchaseOperations {
         }
     }
     
-    private func listenForTransactions() -> Task<Void, Error> {
+    private func createTransactionTask() -> Task<Void, Error> {
         return Task.detached {
-            for await result in Transaction.updates {
+            for await update in Transaction.updates {
                 do {
-                    let transaction = try self.verifyPurchase(result)
+                    let transaction = try self.verifyPurchase(update)
                     try await self.updateUserPurchases()
                     await transaction.finish()
                 } catch {
@@ -245,7 +205,6 @@ class PurchaseOperations {
             }
         }
     }
-
 }
 
 // MARK: Product Identifiers
@@ -275,5 +234,50 @@ extension TippingView.AvailableTips {
 extension EspressoDrink {
     var skIdentifier: String {
         return "nonconsumable.recipe." + id
+    }
+}
+
+enum CaffeinePalStoreFrontError: Error {
+    case productNotFound, failedVerification
+}
+
+enum ProFeatures: String, Identifiable, CaseIterable, CustomStringConvertible {
+    case appIcons = "Custom App Icons"
+    case logging = "Caffeine Logging"
+    case recipes = "Espresso Recipes"
+    
+    var id: Self { return self }
+    
+    var description: String {
+        switch self {
+        case .appIcons:
+            "Customize your Home Screen."
+        case .logging:
+            "Easily log your espresso shots."
+        case .recipes:
+            "Access exclusive espresso recipes."
+        }
+    }
+    
+    var expandedDetails: String {
+        switch self {
+        case .appIcons:
+            "Make Caffeine Pal stnad out in your most personable space - your Home Screen. Choose from three unqiue icons."
+        case .logging:
+            "Our super simple caffeine logging lets you quickly log espresso shots in a matter of seconds."
+        case .recipes:
+            "Unlock access to the world's most exlusive espresso based coffee drinks recipes. Create our signature drinks right at home!"
+        }
+    }
+    
+    var symbol: String {
+        switch self {
+        case .appIcons:
+            "square.fill"
+        case .logging:
+            "checklist.checked"
+        case .recipes:
+            "book.pages.fill"
+        }
     }
 }

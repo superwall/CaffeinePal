@@ -88,7 +88,7 @@ struct PaywallFeatureListingView: View {
                 .font(.largeTitle.weight(.black))
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 .padding(.bottom, 16)
-            ForEach(PurchaseOperations.ProFeatures.allCases) { feature in
+            ForEach(ProFeatures.allCases) { feature in
                 ExpandedFeatureView(feature: feature)
             }
             Button(action: {
@@ -126,7 +126,7 @@ struct PaywallFeatureListingView: View {
 }
 
 struct ExpandedFeatureView: View {
-    let feature: PurchaseOperations.ProFeatures
+    let feature: ProFeatures
     @State private var bounce: Bool = false
     
     var body: some View {

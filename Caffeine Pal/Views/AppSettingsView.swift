@@ -35,8 +35,10 @@ struct AppSettingsView: View {
 }
 
 struct CaffeineProMemberView: View {
+    @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
     @State private var bounceCrown: Bool = false
     @State private var showManageSubs: Bool = false
+    @State private var renewalInfo: String = ""
     
     var body: some View {
         VStack {
@@ -63,7 +65,7 @@ struct CaffeineProMemberView: View {
                             bounceCrown = true
                         }
                 }
-                Text("We're happy to have you.")
+                Text("We're happy to have you. " + renewalInfo)
                     .fontWeight(.medium)
                     .foregroundStyle(Color(uiColor: .secondaryLabel))
                     .frame(minWidth: 0,
@@ -83,6 +85,27 @@ struct CaffeineProMemberView: View {
                     .foregroundStyle(Color(uiColor: .systemGroupedBackground))
             }
         }
+        .task {
+            await fetchRenewsAtString()
+        }
+    }
+    
+    // MARK: Private Functions
+    
+    private func fetchRenewsAtString() async {
+        guard let proAnnualSubscription = storefront.purchasedSubs.first,
+              let status = try? await proAnnualSubscription.subscription?.status.first(where: { $0.state == .subscribed }) else {
+            return
+        }
+        
+        guard case .verified(let renewal) = status.renewalInfo,
+              case .verified(let transaction) = status.transaction,
+              renewal.willAutoRenew,
+              let expirationDate = transaction.expirationDate else {
+            return
+        }
+        
+        renewalInfo = "Renews \(expirationDate.formatted(date: .abbreviated, time: .omitted))."
     }
 }
 
@@ -120,7 +143,7 @@ struct MembershipView: View {
                            maxWidth: .infinity,
                            alignment: .leading)
                     .padding(.vertical)
-                ForEach(PurchaseOperations.ProFeatures.allCases) { feature in
+                ForEach(ProFeatures.allCases) { feature in
                     HStack(alignment: .center, spacing: 0) {
                         Image(systemName: feature.symbol)
                             .resizable()
