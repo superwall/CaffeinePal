@@ -15,11 +15,11 @@ class PurchaseOperations {
     private(set) var tips: [TippingView.AvailableTips : Product] = [:]
     private(set) var recipes: [EspressoDrink : Product] = [:]
     private(set) var subs: [Product] = []
-    private(set) var hasCaffeinePalPro: Bool = false
     
     // Purchased Products
     private(set) var purchasedRecipes: [EspressoDrink] = []
     private(set) var purchasedSubs: [Product] = []
+    private(set) var hasCaffeinePalPro: Bool = false
         
     // MARK: Configure
 
