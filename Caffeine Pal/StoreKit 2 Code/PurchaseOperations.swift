@@ -34,7 +34,11 @@ class PurchaseOperations {
     }
     
     func hasPurchased(_ recipe: EspressoDrink) -> Bool {
-        return false
+        if hasCaffeinePalPro {
+            return true
+        }
+        
+        return purchasedRecipes.contains(recipe)
     }
     
     func purchase(_ recipe: EspressoDrink) async throws -> Bool {
