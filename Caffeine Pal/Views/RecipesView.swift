@@ -9,23 +9,9 @@ import SwiftUI
 import TipKit
 
 struct RecipesView: View {
-    fileprivate enum ModalOption: Identifiable {
-        case recipe(EspressoDrink)
-        case paywall
-
-        var id: String {
-            switch self {
-            case .recipe(let espressoDrink):
-                return espressoDrink.id
-            case .paywall:
-                return "paywall"
-            }
-        }
-    }
-    
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
     @State private var tip: RecipeTip? = nil
-    @State private var modalSelection: ModalOption? = nil
+    @State private var selectedRecipe: EspressoDrink? = nil
     @State private var showError: Bool = false
     @State private var showSuccess: Bool = false
     @State private var purchasedRecipe: EspressoDrink = .empty
@@ -81,13 +67,8 @@ struct RecipesView: View {
                 .padding(.top)
             }
             .navigationTitle("Coffee Menu")
-            .sheet(item: $modalSelection) { selection in
-                switch selection {
-                case .recipe(let drink):
-                    ViewReceipeView(drink: drink)
-                case .paywall:
-                    PaywallView()
-                }
+            .sheet(item: $selectedRecipe) { selection in
+                ViewReceipeView(drink: selection)
             }
             .alert("Uh Oh!", isPresented: $showError) {
                 Button("OK", role: .cancel) { }
@@ -119,7 +100,7 @@ struct RecipesView: View {
             return
         }
         
-        modalSelection = .recipe(recipe)
+        selectedRecipe = recipe
     }
     
     private func buy(drink: EspressoDrink) {

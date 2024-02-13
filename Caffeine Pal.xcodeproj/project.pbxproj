@@ -18,6 +18,7 @@
 		33440CBB2B6055F500D0FF9C /* AppSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CBA2B6055F500D0FF9C /* AppSettingsView.swift */; };
 		33440CBF2B60577B00D0FF9C /* CaffeineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CBE2B60577B00D0FF9C /* CaffeineStore.swift */; };
 		33440CC12B6069E500D0FF9C /* EspressoDrink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CC02B6069E500D0FF9C /* EspressoDrink.swift */; };
+		336827CD2B7C0C58003414D7 /* SuperwallKit in Frameworks */ = {isa = PBXBuildFile; productRef = 336827CC2B7C0C58003414D7 /* SuperwallKit */; };
 		33B40E892B61AA9F004DC075 /* PurchaseOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E882B61AA9F004DC075 /* PurchaseOperations.swift */; };
 		33B40E8B2B62E4D6004DC075 /* ViewReceipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E8A2B62E4D6004DC075 /* ViewReceipeView.swift */; };
 		33B40E8D2B62EE87004DC075 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E8C2B62EE87004DC075 /* PaywallView.swift */; };
@@ -47,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				336827CD2B7C0C58003414D7 /* SuperwallKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +149,9 @@
 			dependencies = (
 			);
 			name = "Caffeine Pal";
+			packageProductDependencies = (
+				336827CC2B7C0C58003414D7 /* SuperwallKit */,
+			);
 			productName = "Caffeine Pal";
 			productReference = 33440C9F2B604A4200D0FF9C /* Caffeine Pal.app */;
 			productType = "com.apple.product-type.application";
@@ -175,6 +180,9 @@
 				Base,
 			);
 			mainGroup = 33440C962B604A4200D0FF9C;
+			packageReferences = (
+				336827CB2B7C0C58003414D7 /* XCRemoteSwiftPackageReference "Superwall-iOS" */,
+			);
 			productRefGroup = 33440CA02B604A4200D0FF9C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -426,6 +434,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		336827CB2B7C0C58003414D7 /* XCRemoteSwiftPackageReference "Superwall-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/superwall-me/Superwall-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.4.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		336827CC2B7C0C58003414D7 /* SuperwallKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 336827CB2B7C0C58003414D7 /* XCRemoteSwiftPackageReference "Superwall-iOS" */;
+			productName = SuperwallKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 33440C972B604A4200D0FF9C /* Project object */;
 }

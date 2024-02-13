@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SuperwallKit
 
 struct IntakeView: View {
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
@@ -113,7 +114,6 @@ struct QuickLogView: View {
 struct QuickAddButton: View {
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
     @Environment(CaffeineStore.self) private var store: CaffeineStore
-    @State private var showPaywall: Bool = false
     
     let text: String
     let amountToLog: Double
@@ -124,10 +124,8 @@ struct QuickAddButton: View {
                 .fontWeight(.medium)
             Spacer()
             Button("Log") {
-                if storefront.hasCaffeinePalPro {
+                Superwall.shared.register(event: "caffeineLogged") {
                     store.log(amountToLog)
-                } else {
-                    showPaywall.toggle()
                 }
             }
             .foregroundStyle(Color.inverseLabel)
@@ -136,9 +134,6 @@ struct QuickAddButton: View {
             .buttonStyle(.borderedProminent)
         }
         .padding(.vertical, 6)
-        .sheet(isPresented: $showPaywall) {
-            PaywallView()
-        }
     }
 }
 

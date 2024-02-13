@@ -7,6 +7,7 @@
 
 import SwiftUI
 import StoreKit
+import SuperwallKit
 
 struct AppSettingsView: View {
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
@@ -168,7 +169,7 @@ struct MembershipView: View {
                     }
                 }
                 Button(action: {
-                    showJoinPro.toggle()
+                    Superwall.shared.register(event: "caffeineLogged")
                 }, label: {
                     Text("Join Pro")
                         .font(.title2.weight(.bold))
@@ -189,9 +190,6 @@ struct MembershipView: View {
                 RoundedRectangle(cornerRadius: 10.0)
                     .foregroundStyle(Color(uiColor: .systemGroupedBackground))
             }
-        }
-        .sheet(isPresented: $showJoinPro) {
-            PaywallView()
         }
     }
 }
@@ -232,7 +230,6 @@ struct AppIconsView: View {
     }
     
     @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
-    @State private var showPaywall: Bool = false
     @State private var currentIcon: String? = UIApplication.shared.alternateIconName
     
     var body: some View {
@@ -268,9 +265,6 @@ struct AppIconsView: View {
                 .id(storefront.hasCaffeinePalPro)
             }
         }
-        .sheet(isPresented: $showPaywall) {
-            PaywallView()
-        }
     }
     
     // MARK: Private Functions
@@ -291,7 +285,7 @@ struct AppIconsView: View {
     private func toggle(_ icon: AvailableIcons) {
         guard storefront.hasCaffeinePalPro else {
             if icon != .primary {
-                showPaywall.toggle()
+                Superwall.shared.register(event: "customIconSelected")
             }
             return
         }

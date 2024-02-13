@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TipKit
+import SuperwallKit
 
 @main
 struct Caffeine_PalApp: App {
@@ -17,6 +18,7 @@ struct Caffeine_PalApp: App {
         WindowGroup {
             ContentView()
                 .task {
+                    Superwall.configure(apiKey: "YOUR_API_KEY")
                     setupTips()
                     await fetchProducts()
                 }
