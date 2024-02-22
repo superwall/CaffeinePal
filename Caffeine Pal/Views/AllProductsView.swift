@@ -14,18 +14,7 @@ struct AllProductsView: View {
     
     var body: some View {
         NavigationStack {
-            StoreView(ids: PurchaseOperations.allProductIdentifiers)
-                .storeButton(.hidden, for: .cancellation)
-                .productViewStyle(.compact)
-                .bold()
-                .navigationTitle("All Products")
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Close", systemImage: "xmark.circle.fill") {
-                            dismiss()
-                        }
-                    }
-                }
+            Text("Implement StoreView")
         }
     }
     

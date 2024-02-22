@@ -63,9 +63,7 @@ struct RecipesView: View {
                                     handleSelectionFor(drink)
                                 }
                             case false:
-                                ProductView(id: drink.skIdentifier)
-                                    .bold()
-                                    .productViewStyle(.compact)
+                                Text("TODO - Product view")
                             }
                         }
                         .animation(.smooth, value: storefront.hasPurchased(drink))
@@ -174,13 +172,7 @@ struct FeaturedEspressoDrinksView: View {
                                 onTap(drink)
                             }
                         case false:
-                            ProductView(id: drink.skIdentifier) {
-                                Image(drink.imageFile())
-                                    .resizable()
-                                    .scaledToFill()
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                            }
-                            .productViewStyle(.large)
+                            Text("TODO - Product view")
                         }
                     }
                     .padding()

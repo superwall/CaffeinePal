@@ -13,32 +13,7 @@ struct SubscriptionView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        SubscriptionStoreView(productIDs: PurchaseOperations.subProductIdentifiers) {
-            ScrollView {
-                VStack {
-                    Text("Join Caffeine Pal Pro Today!")
-                        .font(.largeTitle.weight(.black))
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, 16)
-                    ForEach(ProFeatures.allCases) { feature in
-                        ExpandedFeatureView(feature: feature)
-                    }
-                }
-                .padding()
-            }
-            .containerBackground(Color(uiColor: .systemBackground).gradient,
-                                 for: .subscriptionStoreFullHeight)
-        }
-        .storeButton(.visible, for: .restorePurchases)
-        .subscriptionStoreButtonLabel(.action)
-        .backgroundStyle(.thinMaterial)
-        .onInAppPurchaseCompletion { (product: Product, result: Result<Product.PurchaseResult, Error>) in
-            if case .success(.success(_)) = result {
-                // StoreFront already processes this...
-                // Simply dismiss
-                dismiss()
-            }
-        }
+        Text("TODO")
     }
 }
 
