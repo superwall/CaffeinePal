@@ -10,8 +10,8 @@
       "internalID" : "F1F518CD",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Just a tiny little nugget of thanks.",
+          "displayName" : "Small Tip",
           "locale" : "en_US"
         }
       ],
@@ -25,8 +25,8 @@
       "internalID" : "343AF29D",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "A nice tip, thanks!",
+          "displayName" : "Medium Tip",
           "locale" : "en_US"
         }
       ],
@@ -40,8 +40,8 @@
       "internalID" : "51154F88",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Wow, that's a ton of money!",
+          "displayName" : "Large Tip",
           "locale" : "en_US"
         }
       ],
@@ -55,8 +55,8 @@
       "internalID" : "FBE52ADD",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Blown away, you are the best.",
+          "displayName" : "Irresponsible Tip",
           "locale" : "en_US"
         }
       ],
@@ -70,8 +70,8 @@
       "internalID" : "3AC96DC7",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "A concentrated form of coffee.",
+          "displayName" : "Espresso",
           "locale" : "en_US"
         }
       ],
@@ -85,8 +85,8 @@
       "internalID" : "7B01E66E",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Espresso diluted with hot water.",
+          "displayName" : "Americano",
           "locale" : "en_US"
         }
       ],
@@ -100,8 +100,8 @@
       "internalID" : "FA378086",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Equal parts espresso, steamed milk, and milk.",
+          "displayName" : "Cappuccino",
           "locale" : "en_US"
         }
       ],
@@ -115,8 +115,8 @@
       "internalID" : "DA9FD113",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Espresso, steamed milk and froth.",
+          "displayName" : "Latte",
           "locale" : "en_US"
         }
       ],
@@ -130,8 +130,8 @@
       "internalID" : "7B5443AC",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Reall, a grown-up latte.",
+          "displayName" : "Flat White",
           "locale" : "en_US"
         }
       ],
@@ -145,8 +145,8 @@
       "internalID" : "8029A0F6",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Espresso with a small amount of frothed milk.",
+          "displayName" : "Macchiato",
           "locale" : "en_US"
         }
       ],
@@ -160,8 +160,8 @@
       "internalID" : "0E1778B0",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Equal parts espresso and warm milk.",
+          "displayName" : "Cortado",
           "locale" : "en_US"
         }
       ],
@@ -175,8 +175,8 @@
       "internalID" : "3632A79C",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "A mix of espresso, steamed milk & chocolate.",
+          "displayName" : "Mocha",
           "locale" : "en_US"
         }
       ],
@@ -190,8 +190,8 @@
       "internalID" : "CA747FF0",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "A very concentrated espresso shot.",
+          "displayName" : "Risteretto",
           "locale" : "en_US"
         }
       ],
@@ -205,8 +205,8 @@
       "internalID" : "632EFDDC",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "An espresso shot made with more water.",
+          "displayName" : "Lungo",
           "locale" : "en_US"
         }
       ],
@@ -220,8 +220,8 @@
       "internalID" : "B5F30B63",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Espresso, but times two.",
+          "displayName" : "Doppio",
           "locale" : "en_US"
         }
       ],
@@ -235,8 +235,8 @@
       "internalID" : "62AE4DCC",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Dash of vanilla ice cream topped with a shot.",
+          "displayName" : "Affogato",
           "locale" : "en_US"
         }
       ],
@@ -250,8 +250,8 @@
       "internalID" : "0D40CA64",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Espresso topped with whipped cream.",
+          "displayName" : "Espresso Con Panna",
           "locale" : "en_US"
         }
       ],
@@ -265,8 +265,8 @@
       "internalID" : "47CFA251",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Espresso served with a slice of lemon.",
+          "displayName" : "Espresso Romano",
           "locale" : "en_US"
         }
       ],
@@ -280,8 +280,8 @@
       "internalID" : "27C0E3D8",
       "localizations" : [
         {
-          "description" : "",
-          "displayName" : "",
+          "description" : "Regular drip coffee with a shot of espresso.",
+          "displayName" : "Red Eye",
           "locale" : "en_US"
         }
       ],
@@ -364,8 +364,8 @@
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "",
-              "displayName" : "",
+              "description" : "Everything unlocked for a year.",
+              "displayName" : "Caffeine Pal Pro: Annual",
               "locale" : "en_US"
             }
           ],

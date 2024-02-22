@@ -26,6 +26,8 @@ struct AppSettingsView: View {
                     .padding()
                 TippingView()
                     .padding()
+                ViewCatalogView()
+                    .padding()
                 AppInformationView()
                     .padding()
             }
@@ -191,7 +193,7 @@ struct MembershipView: View {
             }
         }
         .sheet(isPresented: $showJoinPro) {
-            PaywallView()
+            SubscriptionView()
         }
     }
 }
@@ -269,7 +271,7 @@ struct AppIconsView: View {
             }
         }
         .sheet(isPresented: $showPaywall) {
-            PaywallView()
+            SubscriptionView()
         }
     }
     
@@ -420,6 +422,44 @@ struct TippingView: View {
             } catch {
                 showError.toggle()
             }
+        }
+    }
+}
+
+struct ViewCatalogView: View {
+    @State private var showStore: Bool = false
+    
+    var body: some View {
+        VStack {
+            Text("View Catalog")
+                .font(.headline.weight(.bold))
+                .frame(minWidth: 0,
+                       maxWidth: .infinity,
+                       alignment: .leading)
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Caffeine Pal's Store")
+                        .font(.headline)
+                    Text("Check out everything we have to offer.")
+                        .foregroundStyle(Color(uiColor: .secondaryLabel))
+                        .fontWeight(.medium)
+                }
+                Spacer()
+                Button("Shop") {
+                    showStore.toggle()
+                }
+                .foregroundStyle(Color.inverseLabel)
+                .buttonBorderShape(.capsule)
+                .buttonStyle(.borderedProminent)
+            }
+            .padding(10)
+            .background {
+                RoundedRectangle(cornerRadius: 14)
+                    .foregroundStyle(Color(uiColor: .systemGroupedBackground))
+            }
+        }
+        .fullScreenCover(isPresented: $showStore) {
+            AllProductsView()
         }
     }
 }

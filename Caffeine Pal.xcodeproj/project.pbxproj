@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3311A4D22B8547B700AEB1EB /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3311A4D12B8547B700AEB1EB /* SubscriptionView.swift */; };
 		33344BE72B6849E900FCEF58 /* CaffinePalProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 33344BE62B6849E900FCEF58 /* CaffinePalProducts.storekit */; };
 		33440CA32B604A4200D0FF9C /* Caffeine_PalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CA22B604A4200D0FF9C /* Caffeine_PalApp.swift */; };
 		33440CA52B604A4200D0FF9C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CA42B604A4200D0FF9C /* ContentView.swift */; };
@@ -20,10 +21,11 @@
 		33440CC12B6069E500D0FF9C /* EspressoDrink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CC02B6069E500D0FF9C /* EspressoDrink.swift */; };
 		33B40E892B61AA9F004DC075 /* PurchaseOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E882B61AA9F004DC075 /* PurchaseOperations.swift */; };
 		33B40E8B2B62E4D6004DC075 /* ViewReceipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E8A2B62E4D6004DC075 /* ViewReceipeView.swift */; };
-		33B40E8D2B62EE87004DC075 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E8C2B62EE87004DC075 /* PaywallView.swift */; };
+		33B40E8D2B62EE87004DC075 /* AllProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E8C2B62EE87004DC075 /* AllProductsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3311A4D12B8547B700AEB1EB /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		33344BE62B6849E900FCEF58 /* CaffinePalProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = CaffinePalProducts.storekit; sourceTree = "<group>"; };
 		33440C9F2B604A4200D0FF9C /* Caffeine Pal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Caffeine Pal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33440CA22B604A4200D0FF9C /* Caffeine_PalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caffeine_PalApp.swift; sourceTree = "<group>"; };
@@ -39,7 +41,7 @@
 		33440CC02B6069E500D0FF9C /* EspressoDrink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EspressoDrink.swift; sourceTree = "<group>"; };
 		33B40E882B61AA9F004DC075 /* PurchaseOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseOperations.swift; sourceTree = "<group>"; };
 		33B40E8A2B62E4D6004DC075 /* ViewReceipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewReceipeView.swift; sourceTree = "<group>"; };
-		33B40E8C2B62EE87004DC075 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		33B40E8C2B62EE87004DC075 /* AllProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProductsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +111,8 @@
 				33440CB82B6055ED00D0FF9C /* RecipesView.swift */,
 				33440CBA2B6055F500D0FF9C /* AppSettingsView.swift */,
 				33B40E8A2B62E4D6004DC075 /* ViewReceipeView.swift */,
-				33B40E8C2B62EE87004DC075 /* PaywallView.swift */,
+				33B40E8C2B62EE87004DC075 /* AllProductsView.swift */,
+				3311A4D12B8547B700AEB1EB /* SubscriptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -207,7 +210,8 @@
 				33440CA52B604A4200D0FF9C /* ContentView.swift in Sources */,
 				33440CBF2B60577B00D0FF9C /* CaffeineStore.swift in Sources */,
 				33440CB92B6055ED00D0FF9C /* RecipesView.swift in Sources */,
-				33B40E8D2B62EE87004DC075 /* PaywallView.swift in Sources */,
+				3311A4D22B8547B700AEB1EB /* SubscriptionView.swift in Sources */,
+				33B40E8D2B62EE87004DC075 /* AllProductsView.swift in Sources */,
 				33440CB72B6055E700D0FF9C /* IntakeView.swift in Sources */,
 				33440CC12B6069E500D0FF9C /* EspressoDrink.swift in Sources */,
 				33440CA32B604A4200D0FF9C /* Caffeine_PalApp.swift in Sources */,

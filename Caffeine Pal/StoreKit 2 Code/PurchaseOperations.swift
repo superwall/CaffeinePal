@@ -221,6 +221,23 @@ extension PurchaseOperations {
             return EspressoDrink.all().map { $0.skIdentifier }
         }
     }
+        
+    static var subProductIdentifiers: [String] {
+        get {
+            return ["subscription.caffeinePalPro.annual"]
+        }
+    }
+    
+    static var allProductIdentifiers: [String] {
+        get {
+            let tipIdentifiers: [String] = PurchaseOperations.tipProductIdentifiers
+            let recipeIdentifiers: [String] = PurchaseOperations.recipeProductIdentifiers
+            let subIdentifiers: [String] = PurchaseOperations.subProductIdentifiers
+            let allIdentifiers: [String] = tipIdentifiers + recipeIdentifiers + subIdentifiers
+            
+            return allIdentifiers
+        }
+    }
 }
 
 // MARK: Local Models to StoreKit values

@@ -137,7 +137,7 @@ struct QuickAddButton: View {
         }
         .padding(.vertical, 6)
         .sheet(isPresented: $showPaywall) {
-            PaywallView()
+            SubscriptionView()
         }
     }
 }
