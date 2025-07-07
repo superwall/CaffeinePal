@@ -19,8 +19,6 @@
 		33440CBB2B6055F500D0FF9C /* AppSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CBA2B6055F500D0FF9C /* AppSettingsView.swift */; };
 		33440CBF2B60577B00D0FF9C /* CaffeineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CBE2B60577B00D0FF9C /* CaffeineStore.swift */; };
 		33440CC12B6069E500D0FF9C /* EspressoDrink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33440CC02B6069E500D0FF9C /* EspressoDrink.swift */; };
-		337F8E162E170B2D00D61F80 /* CaffeineIntakeDisplayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDA6FB127C8409595026580 /* CaffeineIntakeDisplayIntent.swift */; };
-		337F8E172E170B3100D61F80 /* LogCaffeineSnippetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5234BF911664426FB927285C /* LogCaffeineSnippetIntent.swift */; };
 		33A461572C2B1A6900754051 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33A461562C2B1A6900754051 /* WidgetKit.framework */; };
 		33A461592C2B1A6900754051 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33A461582C2B1A6900754051 /* SwiftUI.framework */; };
 		33A4615C2C2B1A6900754051 /* CaffeinePalWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A4615B2C2B1A6900754051 /* CaffeinePalWidgetsBundle.swift */; };
@@ -37,8 +35,6 @@
 		33B40E892B61AA9F004DC075 /* PurchaseOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E882B61AA9F004DC075 /* PurchaseOperations.swift */; };
 		33B40E8B2B62E4D6004DC075 /* ViewReceipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E8A2B62E4D6004DC075 /* ViewReceipeView.swift */; };
 		33B40E8D2B62EE87004DC075 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B40E8C2B62EE87004DC075 /* PaywallView.swift */; };
-		3D46E9BA62D2460FA3307550 /* LogCaffeineSnippetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5234BF911664426FB927285C /* LogCaffeineSnippetIntent.swift */; };
-		775A388FCFE345D1AFAF0547 /* CaffeineIntakeDisplayIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDA6FB127C8409595026580 /* CaffeineIntakeDisplayIntent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +62,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0BDA6FB127C8409595026580 /* CaffeineIntakeDisplayIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaffeineIntakeDisplayIntent.swift; sourceTree = "<group>"; };
 		33344BE62B6849E900FCEF58 /* CaffinePalProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = CaffinePalProducts.storekit; sourceTree = "<group>"; };
 		33440C9F2B604A4200D0FF9C /* Caffeine Pal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Caffeine Pal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33440CA22B604A4200D0FF9C /* Caffeine_PalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caffeine_PalApp.swift; sourceTree = "<group>"; };
@@ -94,7 +89,6 @@
 		33B40E8A2B62E4D6004DC075 /* ViewReceipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewReceipeView.swift; sourceTree = "<group>"; };
 		33B40E8C2B62EE87004DC075 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		33C267D32C2A0A8B00E54AF6 /* GetCaffeineIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCaffeineIntent.swift; sourceTree = "<group>"; wrapsLines = 0; };
-		5234BF911664426FB927285C /* LogCaffeineSnippetIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCaffeineSnippetIntent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,8 +220,6 @@
 			children = (
 				33A461752C2B6B3700754051 /* LogEspressoIntent.swift */,
 				33C267D32C2A0A8B00E54AF6 /* GetCaffeineIntent.swift */,
-				0BDA6FB127C8409595026580 /* CaffeineIntakeDisplayIntent.swift */,
-				5234BF911664426FB927285C /* LogCaffeineSnippetIntent.swift */,
 			);
 			path = Intents;
 			sourceTree = "<group>";
@@ -348,8 +340,6 @@
 				33440CA32B604A4200D0FF9C /* Caffeine_PalApp.swift in Sources */,
 				33B40E892B61AA9F004DC075 /* PurchaseOperations.swift in Sources */,
 				33B40E8B2B62E4D6004DC075 /* ViewReceipeView.swift in Sources */,
-				775A388FCFE345D1AFAF0547 /* CaffeineIntakeDisplayIntent.swift in Sources */,
-				3D46E9BA62D2460FA3307550 /* LogCaffeineSnippetIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,10 +350,8 @@
 				33A461742C2B674C00754051 /* CaffeinePalEspressoWidget.swift in Sources */,
 				33A4615E2C2B1A6900754051 /* CaffeinePalWidgetsControl.swift in Sources */,
 				33A4616D2C2B1C6B00754051 /* GetCaffeineIntent.swift in Sources */,
-				337F8E162E170B2D00D61F80 /* CaffeineIntakeDisplayIntent.swift in Sources */,
 				33A4615C2C2B1A6900754051 /* CaffeinePalWidgetsBundle.swift in Sources */,
 				33A461772C2B6B3D00754051 /* LogEspressoIntent.swift in Sources */,
-				337F8E172E170B3100D61F80 /* LogCaffeineSnippetIntent.swift in Sources */,
 				33A4616C2C2B1C6700754051 /* CaffeineStore.swift in Sources */,
 				33A4616B2C2B1C6100754051 /* EspressoDrink.swift in Sources */,
 			);
