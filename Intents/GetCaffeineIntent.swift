@@ -31,7 +31,8 @@ struct ShowCaffeineIntakeSnippetIntent: SnippetIntent {
     @Dependency var store: CaffeineStore
     
     func perform() async throws -> some IntentResult & ShowsSnippetView {
-        print("Firing up ShowCaffeineIntakeSnippetIntent")
+        let current = await store.amountIngested
+        print("Firing up ShowCaffeineIntakeSnippetIntent - ingested \(current)")
         return .result(view: CaffeineIntakeSnip(store: store))
                 
     }
@@ -47,7 +48,7 @@ struct CaffeineIntakeSnip: View {
                 .foregroundStyle(.secondary)
             Text(store.formattedAmount())
                 .font(.title2)
-            Button(intent: LogShotIntent()) {
+            Button(intent: LogShotIntent(amount: 64)) {
                 Text("Log Single Shot")
             }
         }
@@ -62,24 +63,27 @@ struct LogShotIntent: AppIntent {
     static let title: LocalizedStringResource = "Log Caffeine Amount"
     static let isDiscoverable: Bool = false
     
-//    @Parameter
-//    var amount: Int
+    @Parameter
+    var amount: Int
     
-//    @Dependency
-//    var store: CaffeineStore
+    @Dependency
+    var store: CaffeineStore
     
     func perform() async throws -> some IntentResult {
-        print("Firing intent")
-        //store.log(Double(self.amount))
+        let current = await store.formattedAmount()
+        print("Firing intent with \(self.amount) and current is \(current)")
+        await store.log(Double(amount))
+        let new = await store.formattedAmount()
+        print("Returning from intent and current is \(new)")
         return .result()
     }
 }
-//
-//extension LogShotIntent {
-//    init(amount: Int) {
-//        self.amount = amount
-//    }
-//}
+
+extension LogShotIntent {
+    init(amount: Int) {
+        self.amount = amount
+    }
+}
 
 #Preview {
     CaffeineIntakeSnip(store: .init())
