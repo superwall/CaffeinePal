@@ -15,7 +15,7 @@ struct GetCaffeineIntent: AppIntent {
     
     @Dependency var store: CaffeineStore
     
-    func perform() async throws -> some IntentResult & ReturnsValue<Double>  & ShowsSnippetIntent {
+    func perform() async throws -> some IntentResult & ReturnsValue<Double> & ShowsSnippetIntent {
         let amount = await store.amountIngested
         
         print("😎 Get caffeine intent fired")
@@ -27,6 +27,7 @@ struct GetCaffeineIntent: AppIntent {
 
 struct ShowCaffeineIntakeSnippetIntent: SnippetIntent {
     static let title: LocalizedStringResource = "Caffeine Snippet"
+    static let isDiscoverable: Bool = false
     
     @Dependency var store: CaffeineStore
     
