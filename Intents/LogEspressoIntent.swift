@@ -13,6 +13,8 @@ struct LogEspressoIntent: AppIntent {
     static var title = LocalizedStringResource("Log Espresso Shot")
     static var description = IntentDescription("Logs some espresso.")
     
+    @Dependency var store: CaffeineStore
+    
     @Parameter(title: "Shots")
     var shots: EspressoShot?
     
@@ -31,12 +33,12 @@ struct LogEspressoIntent: AppIntent {
             shots = try await $shots.requestValue(.init(stringLiteral: "How many shots of espresso are you drinking?"))
         }
         
-        let store: CaffeineStore = .shared
-        store.log(espressoShot: shots!)
+        await store.log(espressoShot: shots!)
+        let val = await "Logged \(store.formattedAmount(.init(value: Double(shots!.rawValue), unit: .milligrams)))."
         
         // Refresh widgets
         WidgetCenter.shared.reloadAllTimelines()
         
-        return .result(dialog: .init("Logged \(store.formattedAmount(.init(value: Double(shots!.rawValue), unit: .milligrams)))."))
+        return .result(dialog: .init(stringLiteral: val))
     }
 }

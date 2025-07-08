@@ -7,15 +7,19 @@
 
 import SwiftUI
 import TipKit
+import AppIntents
 
 @main
 struct Caffeine_PalApp: App {
-    @State private var store: CaffeineStore = .shared
+    @State private var store: CaffeineStore = .init()
     @State private var purchases: PurchaseOperations = .init()
     
     init() {
         ShortcutsProvider.updateAppShortcutParameters()
+        let appData = self.store
+        AppDependencyManager.shared.add(dependency: appData)
     }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

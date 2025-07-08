@@ -38,7 +38,7 @@ struct CaffeineGaugeView: View {
     @Environment(CaffeineStore.self) private var store: CaffeineStore
     
     var body: some View {
-        Text(String(store.todaysCaffeine))
+        Text(String(store.todaysCaffeine()))
             .font(.system(size: 54))
             .fontWeight(.bold)
             .frame(width: 200)
@@ -140,5 +140,5 @@ struct QuickAddButton: View {
 #Preview {
     IntakeView()
         .environment(PurchaseOperations())
-        .environment(CaffeineStore.shared)
+        .environment(CaffeineStore.init())
 }
