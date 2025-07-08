@@ -18,7 +18,7 @@ struct GetCaffeineIntent: AppIntent {
     func perform() async throws -> some IntentResult & ReturnsValue<Double>  & ShowsSnippetIntent {
         let amount = await store.amountIngested
         
-        print("Get caffeine intent fired")
+        print("😎 Get caffeine intent fired")
         
         return .result(value: amount,
                        snippetIntent: ShowCaffeineIntakeSnippetIntent())
@@ -32,7 +32,7 @@ struct ShowCaffeineIntakeSnippetIntent: SnippetIntent {
     
     func perform() async throws -> some IntentResult & ShowsSnippetView {
         let current = await store.amountIngested
-        print("Firing up ShowCaffeineIntakeSnippetIntent - ingested \(current)")
+        print("😎 Firing up ShowCaffeineIntakeSnippetIntent - ingested \(current)")
         return .result(view: CaffeineIntakeSnip(store: store))
                 
     }
@@ -47,10 +47,29 @@ struct CaffeineIntakeSnip: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             Text(store.formattedAmount())
-                .font(.title2)
-            Button(intent: LogShotIntent(amount: 64)) {
-                Text("Log Single Shot")
+                .font(.title)
+                .contentTransition(.numericText())
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                .padding(.bottom, 12)
+            Spacer()
+            Text("Quick Log:")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+            HStack {
+                Button(intent: LogShotIntent(amount: EspressoShot.single.rawValue)) {
+                    Text("Single")
+                }
+                Spacer()
+                Button(intent: LogShotIntent(amount: EspressoShot.double.rawValue)) {
+                    Text("Double")
+                }
+                Spacer()
+                Button(intent: LogShotIntent(amount: EspressoShot.triple.rawValue)) {
+                    Text("Triple")
+                }
             }
+            .buttonStyle(IntentScaleButtonStyle())
         }
         .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
         .padding(12)
@@ -71,10 +90,10 @@ struct LogShotIntent: AppIntent {
     
     func perform() async throws -> some IntentResult {
         let current = await store.formattedAmount()
-        print("Firing intent with \(self.amount) and current is \(current)")
+        print("😎 Firing intent with \(self.amount) and current is \(current)")
         await store.log(Double(amount))
         let new = await store.formattedAmount()
-        print("Returning from intent and current is \(new)")
+        print("😎 Returning from intent and current is \(new)")
         return .result()
     }
 }
@@ -83,6 +102,26 @@ extension LogShotIntent {
     init(amount: Int) {
         self.amount = amount
     }
+}
+
+struct IntentScaleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundStyle(.white)
+            .fontWeight(.semibold)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.blue]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .clipShape(Capsule())
+            .scaleEffect(configuration.isPressed ? 0.86 : 1.0)
+            .animation(.easeInOut(duration: 0.24), value: configuration.isPressed)
+        }
 }
 
 #Preview {
