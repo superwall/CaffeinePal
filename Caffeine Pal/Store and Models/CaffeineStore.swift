@@ -9,6 +9,7 @@ import Foundation
 import Observation
 import SuperwallKit
 
+@MainActor
 @Observable
 class CaffeineStore {
     enum FormattedAmount {
@@ -24,22 +25,26 @@ class CaffeineStore {
     
     var dailyLimit: Double = 300.0
     
-    private(set) var todaysCaffeine: Double = 0.0 {
+    private var _todaysCaffeine: Double = 0.0 {
         didSet {
-            let proposedValue = (todaysCaffeine/dailyLimit) * 1.0
+            let proposedValue = (_todaysCaffeine/dailyLimit) * 1.0
             
             if proposedValue > 1.0 {
                 amountIngested = 1.0
             } else {
-                amountIngested = (todaysCaffeine/dailyLimit) * 1.0
+                amountIngested = (_todaysCaffeine/dailyLimit) * 1.0
             }
             
-            if todaysCaffeine > dailyLimit {
-                amountOver = (todaysCaffeine - dailyLimit)
+            if _todaysCaffeine > dailyLimit {
+                amountOver = (_todaysCaffeine - dailyLimit)
             } else {
                 amountOver = 0.0
             }
         }
+    }
+    
+    func todaysCaffeine() -> Double {
+        return _todaysCaffeine
     }
     
     private(set) var amountIngested: Double = 0.0
@@ -52,13 +57,13 @@ class CaffeineStore {
     // MARK: Functions
     
     func log(_ amount: Double) {
-        todaysCaffeine += amount
+        _todaysCaffeine += amount
     }
     
     func formattedAmount(for value: FormattedAmount = .dailyIntake) -> String {
         switch value {
         case .dailyIntake:
-            return formattedAmount(.init(value: self.todaysCaffeine, unit: .milligrams))
+            return formattedAmount(.init(value: self.todaysCaffeine(), unit: .milligrams))
         case .amountOver:
             return formattedAmount(.init(value: self.amountOver, unit: .milligrams))
         }
@@ -93,7 +98,7 @@ extension CaffeineStore: SuperwallDelegate {
             // Add the espresso product to the purchase history
             if CaffeineStore.recipeProductIdentifiers.contains(p.id),
                let espressoModel = EspressoDrink.all().first(where: { p.id == $0.skIdentifier }) {
-                   self.purchasedEspressoRecipes.insert(espressoModel)
+                self.purchasedEspressoRecipes.insert(espressoModel)
             }
         default:
             print("Superwall event: \(eventInfo.event)")

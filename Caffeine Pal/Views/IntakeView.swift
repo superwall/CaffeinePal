@@ -35,7 +35,7 @@ struct CaffeineGaugeView: View {
     @Environment(CaffeineStore.self) private var store: CaffeineStore
     
     var body: some View {
-        Text(String(store.todaysCaffeine))
+        Text(String(store.todaysCaffeine()))
             .font(.system(size: 54))
             .fontWeight(.bold)
             .frame(width: 200)

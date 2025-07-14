@@ -330,6 +330,7 @@ struct TippingView: View {
             }
         }
         
+        @MainActor
         func price(from store: CaffeineStore) -> String {
             guard let product = store.tipProduct(from: self) else {
                 return ""
