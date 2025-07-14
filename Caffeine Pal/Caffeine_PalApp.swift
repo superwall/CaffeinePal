@@ -12,22 +12,21 @@ import SuperwallKit
 @main
 struct Caffeine_PalApp: App {
     @State private var store: CaffeineStore = .init()
-    @State private var purchases: PurchaseOperations = .init()
-    
+ 
     init() {
-        Superwall.configure(apiKey: "api_key")
+        Superwall.configure(apiKey: "pk_0ef0533ab1eb3b5843e8dc43d933c348b7eec42ee7592f9c")
+        Superwall.shared.delegate = store
+        setupTips()
     }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .task {
-                    setupTips()
-                    await fetchProducts()
+                    await store.fetchTipAndEspressoRecipeProducts()
                 }
         }
         .environment(store)
-        .environment(purchases)
     }
 }
 
@@ -40,13 +39,5 @@ extension Caffeine_PalApp {
             .displayFrequency(.immediate),
             .datastoreLocation(.applicationDefault)
         ])
-    }
-    
-    private func fetchProducts() async {
-        do {
-            try await purchases.configure()
-        } catch {
-            print(error)
-        }
     }
 }

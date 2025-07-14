@@ -9,7 +9,7 @@ import SwiftUI
 import TipKit
 
 struct RecipesView: View {
-    @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
+    @Environment(CaffeineStore.self) private var store
     @State private var tip: RecipeTip? = nil
     @State private var selectedRecipe: EspressoDrink? = nil
     @State private var showError: Bool = false
@@ -51,7 +51,7 @@ struct RecipesView: View {
                                     .foregroundStyle(Color(uiColor: .secondaryLabel))
                             }
                             Spacer()
-                            Button(storefront.hasPurchased(drink) ? "View" : "Buy") {
+                            Button(store.hasPurchased(drink) ? "View" : "Buy") {
                                 handleSelectionFor(drink)
                             }
                             .foregroundStyle(Color.inverseLabel)
@@ -87,29 +87,33 @@ struct RecipesView: View {
     }
     
     // MARK: Private Functions
-    
+
     private func setTipPriceString() {
-        if let firstRecipeProduct = storefront.recipes.values.first {
-            self.tip = .init(price: firstRecipeProduct.displayPrice)
+        if let firstRecipeProduct = store.espressoProducts.first{
+            self.tip = .init(price: firstRecipeProduct.localizedPrice)
         }
     }
-    
+
     private func handleSelectionFor(_ recipe: EspressoDrink) {
-        guard storefront.hasCaffeinePalPro || storefront.hasPurchased(recipe) else {
+        guard store.hasCaffeinePalPro || store.hasPurchased(recipe) else {
             buy(drink: recipe)
             return
         }
         
         selectedRecipe = recipe
     }
-    
+
     private func buy(drink: EspressoDrink) {
         Task {
+            guard let espressoProduct = store.espressoProduct(from: drink) else {
+                showError.toggle()
+                return
+            }
+            
             do {
-                if try await storefront.purchase(drink) {
-                    purchasedRecipe = drink
-                    showSuccess.toggle()
-                }
+                try await store.purchase(espressoProduct)
+                purchasedRecipe = drink
+                showSuccess.toggle()
             } catch {
                 showError.toggle()
             }
@@ -118,7 +122,7 @@ struct RecipesView: View {
 }
 
 struct FeaturedEspressoDrinksView: View {
-    @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
+    @Environment(CaffeineStore.self) private var store
     private let featured: [EspressoDrink] = [.affogato, .ristretto, .flatWhite]
     let onTap: (EspressoDrink) -> ()
 
@@ -137,7 +141,8 @@ struct FeaturedEspressoDrinksView: View {
                                     .fontWeight(.medium)
                                     .padding(.leading, 4)
                                 Spacer()
-                                Button(storefront.hasPurchased(drink) ? "View" : "Buy") {
+
+                                Button(store.hasPurchased(drink) ? "View" : "Buy") {
                                     onTap(drink)
                                 }
                                 .foregroundStyle(Color.inverseLabel)
@@ -183,5 +188,4 @@ struct RecipeTip: Tip {
 
 #Preview {
     RecipesView()
-        .environment(PurchaseOperations())
 }

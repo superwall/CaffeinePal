@@ -2,12 +2,21 @@
   "originHash" : "b551afb6becb63abb07916cc03ae7b94b3e2525be3e1c64b545f66a3bc3ff6ee",
   "pins" : [
     {
+      "identity" : "superscript-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/superwall/Superscript-iOS",
+      "state" : {
+        "revision" : "5f99cecebdbbdb0be96f413dbd0e7458180977ed",
+        "version" : "0.2.8"
+      }
+    },
+    {
       "identity" : "superwall-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/superwall-me/Superwall-iOS",
       "state" : {
-        "revision" : "99d89e2f097db3697d5141680d0b7ea77780c308",
-        "version" : "3.6.5"
+        "revision" : "f42a089760ffbc6a626cd693cb0f301277902e0b",
+        "version" : "4.5.2"
       }
     }
   ],

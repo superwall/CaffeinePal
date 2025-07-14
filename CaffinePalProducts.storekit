@@ -1,4 +1,14 @@
 {
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
   "identifier" : "769D97C6",
   "nonRenewingSubscriptions" : [
 
@@ -373,13 +383,44 @@
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Caffeine Pal Pro: Annual",
           "subscriptionGroupID" : "19AA9E89",
-          "type" : "RecurringSubscription"
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "2.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "A983E9C8",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "subscription.caffeinePalPro.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Caffeine Pal Pro: Monthly",
+          "subscriptionGroupID" : "19AA9E89",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
         }
       ]
     }
   ],
   "version" : {
-    "major" : 3,
+    "major" : 4,
     "minor" : 0
   }
 }

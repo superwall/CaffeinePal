@@ -10,12 +10,12 @@ import StoreKit
 import SuperwallKit
 
 struct AppSettingsView: View {
-    @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
+    @Environment(CaffeineStore.self) private var store
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                switch storefront.hasCaffeinePalPro {
+                switch store.hasCaffeinePalPro {
                 case true:
                     CaffeineProMemberView()
                         .padding()
@@ -36,7 +36,6 @@ struct AppSettingsView: View {
 }
 
 struct CaffeineProMemberView: View {
-    @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
     @State private var bounceCrown: Bool = false
     @State private var showManageSubs: Bool = false
     @State private var renewalInfo: String = ""
@@ -86,27 +85,6 @@ struct CaffeineProMemberView: View {
                     .foregroundStyle(Color(uiColor: .systemGroupedBackground))
             }
         }
-        .task {
-            await fetchRenewsAtString()
-        }
-    }
-    
-    // MARK: Private Functions
-    
-    private func fetchRenewsAtString() async {
-        guard let proAnnualSubscription = storefront.purchasedSubs.first,
-              let status = try? await proAnnualSubscription.subscription?.status.first(where: { $0.state == .subscribed }) else {
-            return
-        }
-        
-        guard case .verified(let renewal) = status.renewalInfo,
-              case .verified(let transaction) = status.transaction,
-              renewal.willAutoRenew,
-              let expirationDate = transaction.expirationDate else {
-            return
-        }
-        
-        renewalInfo = "Renews \(expirationDate.formatted(date: .abbreviated, time: .omitted))."
     }
 }
 
@@ -169,7 +147,7 @@ struct MembershipView: View {
                     }
                 }
                 Button(action: {
-                    Superwall.shared.register(event: "caffeineLogged")
+                    Superwall.shared.register(placement: "caffeineLogged")
                 }, label: {
                     Text("Join Pro")
                         .font(.title2.weight(.bold))
@@ -195,6 +173,8 @@ struct MembershipView: View {
 }
 
 struct AppIconsView: View {
+    @Environment(CaffeineStore.self) private var store
+    
     enum AvailableIcons: String, Identifiable, CaseIterable, CustomStringConvertible {
         case primary = "AppIcon"
         case seconday = "SecondaryAppIcon"
@@ -229,7 +209,6 @@ struct AppIconsView: View {
         }
     }
     
-    @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
     @State private var currentIcon: String? = UIApplication.shared.alternateIconName
     
     var body: some View {
@@ -262,7 +241,7 @@ struct AppIconsView: View {
                             .foregroundStyle(Color(uiColor: .systemGroupedBackground))
                     }
                 }
-                .id(storefront.hasCaffeinePalPro)
+                .id(store.hasCaffeinePalPro)
             }
         }
     }
@@ -270,7 +249,7 @@ struct AppIconsView: View {
     // MARK: Private Functions
     
     private func symbolFor(_ icon: AvailableIcons) -> String {
-        if storefront.hasCaffeinePalPro {
+        if store.hasCaffeinePalPro {
             return icon.bundleIconName == currentIcon ? "checkmark.circle.fill" :
                                                         "circle"
         } else {
@@ -283,9 +262,9 @@ struct AppIconsView: View {
     }
     
     private func toggle(_ icon: AvailableIcons) {
-        guard storefront.hasCaffeinePalPro else {
+        guard store.hasCaffeinePalPro else {
             if icon != .primary {
-                Superwall.shared.register(event: "customIconSelected")
+                Superwall.shared.register(placement: "customIconSelected")
             }
             return
         }
@@ -302,6 +281,8 @@ struct AppIconsView: View {
 }
 
 struct TippingView: View {
+    @Environment(CaffeineStore.self) private var store
+    
     enum AvailableTips: String, Identifiable, CaseIterable, CustomStringConvertible {
         case small = "Small Tip"
         case medium = "Medium Tip"
@@ -348,9 +329,16 @@ struct TippingView: View {
                 "irresponsible"
             }
         }
+        
+        func price(from store: CaffeineStore) -> String {
+            guard let product = store.tipProduct(from: self) else {
+                return ""
+            }
+            
+            return product.localizedPrice
+        }
     }
     
-    @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
     @State private var showError: Bool = false
     @State private var showSuccess: Bool = false
     @State private var tipAmount: String = ""
@@ -376,7 +364,7 @@ struct TippingView: View {
                             .fontWeight(.medium)
                     }
                     Spacer()
-                    Button(storefront.tips[tip]?.displayPrice ?? "") {
+                    Button(tip.price(from: store)) {
                         buy(tip)
                     }
                     .foregroundStyle(Color.inverseLabel)
@@ -407,10 +395,14 @@ struct TippingView: View {
     private func buy(_ tip: AvailableTips) {
         Task {
             do {
-                if try await storefront.purchase(tip) {
-                    tipAmount = storefront.tips[tip]?.displayPrice ?? "0"
-                    showSuccess.toggle()
+                guard let tipProduct = store.tipProduct(from: tip) else {
+                    showError.toggle()
+                    return
                 }
+                
+                try await store.purchase(tipProduct)
+                tipAmount = tipProduct.localizedPrice
+                showSuccess.toggle()
             } catch {
                 showError.toggle()
             }
@@ -447,5 +439,4 @@ struct AppInformationView: View {
 }
 #Preview {
     AppSettingsView()
-        .environment(PurchaseOperations())
 }

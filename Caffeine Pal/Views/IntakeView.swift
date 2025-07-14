@@ -9,7 +9,6 @@ import SwiftUI
 import SuperwallKit
 
 struct IntakeView: View {
-    @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
     @Environment(CaffeineStore.self) private var store: CaffeineStore
     
     var body: some View {
@@ -112,7 +111,6 @@ struct QuickLogView: View {
 }
 
 struct QuickAddButton: View {
-    @Environment(PurchaseOperations.self) private var storefront: PurchaseOperations
     @Environment(CaffeineStore.self) private var store: CaffeineStore
     
     let text: String
@@ -124,7 +122,7 @@ struct QuickAddButton: View {
                 .fontWeight(.medium)
             Spacer()
             Button("Log") {
-                Superwall.shared.register(event: "caffeineLogged") {
+                Superwall.shared.register(placement: "caffeineLogged") {
                     store.log(amountToLog)
                 }
             }
@@ -139,6 +137,5 @@ struct QuickAddButton: View {
 
 #Preview {
     IntakeView()
-        .environment(PurchaseOperations())
         .environment(CaffeineStore())
 }
