@@ -8,6 +8,7 @@
 import Foundation
 import Observation
 import SuperwallKit
+import UIKit
 
 @MainActor
 @Observable
@@ -76,7 +77,7 @@ class CaffeineStore {
 
 // MARK: Superwall Delegate and Single IAP Functions
 
-extension CaffeineStore: SuperwallDelegate {
+extension CaffeineStore: SuperwallDelegate, PaywallViewControllerDelegate {
     func subscriptionStatusDidChange(from oldValue: SubscriptionStatus,
                                      to newValue: SubscriptionStatus) {
         switch newValue {
@@ -102,6 +103,65 @@ extension CaffeineStore: SuperwallDelegate {
             }
         default:
             print("Superwall event: \(eventInfo.event)")
+        }
+    }
+    
+    func customerInfoDidChange(from oldValue: CustomerInfo,
+                               to newValue: CustomerInfo) {
+
+    }
+
+    func handleCustomPaywallAction(withName name: String) {
+        if name == "showFromInline" {
+            Task {
+                await presentAllPlansPaywall()
+            }
+        }
+    }
+
+    // MARK: PaywallViewControllerDelegate
+
+    func paywall(
+        _ paywall: PaywallViewController,
+        didFinishWith result: PaywallResult,
+        shouldDismiss: Bool
+    ) {
+        if shouldDismiss {
+            paywall.dismiss(animated: true)
+        }
+    }
+
+    func paywall(
+        _ paywall: PaywallViewController,
+        loadingStateDidChange loadingState: PaywallLoadingState
+    ) {
+        // Handle loading state changes if needed
+    }
+
+    // MARK: Custom Paywall Presentation
+
+    private func presentAllPlansPaywall() async {
+        do {
+            let paywallViewController = try await Superwall.shared.getPaywall(
+                forPlacement: "showAllPlansPaywall",
+                delegate: self
+            )
+
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let rootViewController = windowScene.windows.first?.rootViewController else {
+                return
+            }
+
+            var topController = rootViewController
+            while let presented = topController.presentedViewController {
+                topController = presented
+            }
+
+            topController.present(paywallViewController, animated: true)
+        } catch let reason as PaywallSkippedReason {
+            print("Paywall skipped: \(reason)")
+        } catch {
+            print("Error presenting paywall: \(error)")
         }
     }
     

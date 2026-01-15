@@ -7,6 +7,7 @@
 
 import SwiftUI
 import TipKit
+import SuperwallKit
 
 struct RecipesView: View {
     @Environment(CaffeineStore.self) private var store
@@ -65,6 +66,10 @@ struct RecipesView: View {
                 }
                 .padding(.horizontal)
                 .padding(.top)
+                FooterPaywallView()
+                    .frame(height: 240)
+                    .padding(.horizontal)
+                    .padding(.vertical)
             }
             .navigationTitle("Coffee Menu")
             .sheet(item: $selectedRecipe) { selection in
@@ -166,21 +171,28 @@ struct FeaturedEspressoDrinksView: View {
     }
 }
 
+struct FooterPaywallView: View {
+    var body: some View {
+        PaywallView(placement: "presentInline")
+            .cornerRadius(32)
+    }
+}
+
 struct RecipeTip: Tip {
     private var price: String
-    
+
     init(price: String) {
         self.price = price
     }
-    
+
     var title: Text {
         Text("Our Signature Recipes")
     }
-    
+
     var message: Text? {
         Text("Make espresso drinks like never before. Each of our secret espresso recipes are available for purchase for \(price).")
     }
-    
+
     var image: Image? {
         Image(systemName: "cup.and.saucer.fill")
     }

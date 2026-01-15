@@ -112,7 +112,7 @@ struct QuickLogView: View {
 
 struct QuickAddButton: View {
     @Environment(CaffeineStore.self) private var store: CaffeineStore
-    
+    let coffeeChoice: String = ""
     let text: String
     let amountToLog: Double
     
@@ -122,7 +122,8 @@ struct QuickAddButton: View {
                 .fontWeight(.medium)
             Spacer()
             Button("Log") {
-                Superwall.shared.register(placement: "caffeineLogged") {
+                Superwall.shared.register(placement: "caffeineLogged",
+                                          params: ["selectedCoffee": coffeeChoice]) {
                     store.log(amountToLog)
                 }
             }
